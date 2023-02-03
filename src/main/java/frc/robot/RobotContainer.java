@@ -29,7 +29,11 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, 2);
     private final JoystickButton robotCentric = new JoystickButton(driver, 12);
-    private final JoystickButton aim = new JoystickButton(driver, 1);
+    private final JoystickButton aimButton = new JoystickButton(driver, 1);
+    private final JoystickButton topPoleButton = new JoystickButton(driver, 5);
+    private final JoystickButton bottomPoleButton = new JoystickButton(driver, 3);
+    private final JoystickButton cubeButton = new JoystickButton(driver, 6);
+    private final JoystickButton coneButton = new JoystickButton(driver, 4);
 
     /* Subsystems */
     public final Swerve s_Swerve = new Swerve();
@@ -60,7 +64,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        aim.whileTrue(new orientDrive(LimeLight));
+        aimButton.whileTrue(new orientDrive(LimeLight, () -> -driver.getRawAxis(translationAxis), 
+        () -> -driver.getRawAxis(strafeAxis)));
+        topPoleButton.onTrue(new setTopPolePipeline(LimeLight));
+        bottomPoleButton.onTrue(new setBottomPolePipeline(LimeLight));
+        cubeButton.onTrue(new setCubePipeline(LimeLight));
+        coneButton.onTrue(new setConePipeline(LimeLight));
     }
 
     /**

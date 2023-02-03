@@ -26,12 +26,12 @@ public class Vision extends SubsystemBase{
         SmartDashboard.putNumber("Limelight x offset", xOffset);
         SmartDashboard.putBoolean("Targets visible", visible);
     }
-    public void aim(){
+    public void aim(Translation2d translation){
         double Kp = 0.1;
         double min_command = 0.05;
         double heading_error = -xOffset;
         if (Math.abs(getX()) == 0){
-            s_Swerve.drive(new Translation2d(0, 0), 2, true, false);
+            s_Swerve.drive(new Translation2d(0, 0), 2, true, true);
         }
         else{
             if (xOffset > 1.0)
@@ -42,13 +42,29 @@ public class Vision extends SubsystemBase{
             {
                     steering_adjust = Kp*heading_error + min_command;
             }
-            s_Swerve.drive(new Translation2d(0, 0), steering_adjust, true, true);
+            s_Swerve.drive(translation, steering_adjust, true, true);
         }
         
 
         // Convert to module states
 
         
+    }
+    public void setTopPolePipeline(){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+
+    }
+    public void setBottomPoplePipeline(){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+
+    }
+    public void setCubePipeline(){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+
+    }
+    public void setConePipeline(){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(3);
+
     }
     public double getX(){
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
