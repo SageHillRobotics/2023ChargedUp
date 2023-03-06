@@ -17,7 +17,7 @@ import java.util.List;
 
 public class exampleAuto extends SequentialCommandGroup {
   public exampleAuto(Swerve s_Swerve) {
-    TrajectoryConfig config =
+    TrajectoryConfig config = 
         new TrajectoryConfig(
                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                 Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)

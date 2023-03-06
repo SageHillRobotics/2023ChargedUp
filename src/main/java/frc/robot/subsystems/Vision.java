@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.math.geometry.Translation2d;
-//import frc.robot.Constants;
+import frc.robot.Constants;
 
 
 public class Vision extends SubsystemBase{
@@ -69,7 +69,7 @@ public class Vision extends SubsystemBase{
     public double getX(){
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     }
-    //public double getDistance(){
-        //return ((Constants.Swerve.targetHeightInches - Constants.Swerve.visionHeightInches)/(Math.tan(yOffset)));
-    //}
+    public double getDistance(){
+        return ((10)/(Math.tan(yOffset)));
+    }
 }
