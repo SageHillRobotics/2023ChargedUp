@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.Constants;
+//import frc.robot.Constants;
 
 
 public class Vision extends SubsystemBase{
@@ -26,12 +26,12 @@ public class Vision extends SubsystemBase{
         SmartDashboard.putNumber("Limelight x offset", xOffset);
         SmartDashboard.putBoolean("Targets visible", visible);
     }
-    public void aim(Translation2d translation){
+    public void aim(){
         double Kp = 0.1;
         double min_command = 0.05;
         double heading_error = -xOffset;
         if (Math.abs(getX()) == 0){
-            s_Swerve.drive(new Translation2d(0, 0), 2, true, true);
+            s_Swerve.drive(new Translation2d(0, 0), 2, true, false);
         }
         else{
             if (xOffset > 1.0)
@@ -42,7 +42,7 @@ public class Vision extends SubsystemBase{
             {
                     steering_adjust = Kp*heading_error + min_command;
             }
-            s_Swerve.drive(translation, steering_adjust, true, true);
+            s_Swerve.drive(new Translation2d(0, 0), steering_adjust, true, true);
         }
         
 
@@ -50,26 +50,10 @@ public class Vision extends SubsystemBase{
 
         
     }
-    public void setTopPolePipeline(){
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-
-    }
-    public void setBottomPoplePipeline(){
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
-
-    }
-    public void setCubePipeline(){
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
-
-    }
-    public void setConePipeline(){
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(3);
-
-    }
     public double getX(){
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     }
-    public double getDistance(){
-        return ((10)/(Math.tan(yOffset)));
-    }
+    //public double getDistance(){
+        //return ((Constants.Swerve.targetHeightInches - Constants.Swerve.visionHeightInches)/(Math.tan(yOffset)));
+    //}
 }
